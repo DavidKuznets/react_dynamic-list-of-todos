@@ -50,16 +50,15 @@ export const TodoModal: React.FC<TodoModalProps> = ({ todo, closeModal }) => {
           ) : (
             <>
               <p className="block">{todo.title}</p>
-              <p className="block">
-                {todo.completed ? 'Completed' : 'Not completed'}
+              <p
+                className={
+                  todo.completed ? 'has-text-success' : 'has-text-danger'
+                }
+              >
+                {todo.completed ? 'Done' : 'Planned'}
               </p>
-              {user ? (
-                <p className="block">
-                  Assigned to: {user.name} ({user.email})
-                </p>
-              ) : (
-                <p className="block has-text-danger">User not found</p>
-              )}
+              {' by '}
+              <a href={`mailto:${user?.email}`}>{user?.name}</a>
             </>
           )}
         </div>
