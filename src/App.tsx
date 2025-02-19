@@ -1,5 +1,7 @@
 /* eslint-disable max-len */
 import React, { useEffect, useState } from 'react';
+import 'bulma/css/bulma.css';
+import '@fortawesome/fontawesome-free/css/all.css';
 import { getTodos } from './api';
 import { TodoList } from './components/TodoList';
 import { TodoFilter } from './components/TodoFilter';

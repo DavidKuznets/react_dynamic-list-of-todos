@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { getUser } from '../../api';
 import { Loader } from '../Loader';
 import { Todo } from '../../types/Todo';
+
 interface TodoModalProps {
   todo: Todo;
   closeModal: () => void;
@@ -18,9 +19,14 @@ export const TodoModal: React.FC<TodoModalProps> = ({ todo, closeModal }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    if (!todo.userId) {
+      return;
+    }
+
     setLoading(true);
     getUser(todo.userId)
       .then(setUser)
+      .catch(() => setUser(null))
       .finally(() => setLoading(false));
   }, [todo.userId]);
 
@@ -29,7 +35,7 @@ export const TodoModal: React.FC<TodoModalProps> = ({ todo, closeModal }) => {
       <div className="modal-background" onClick={closeModal} />
       <div className="modal-card">
         <header className="modal-card-head" data-cy="modal-header">
-          <div className="modal-card-title">{todo.title}</div>
+          <div className="modal-card-title">Todo #{todo.id}</div>
           <button
             type="button"
             className="delete"
@@ -47,10 +53,12 @@ export const TodoModal: React.FC<TodoModalProps> = ({ todo, closeModal }) => {
               <p className="block">
                 {todo.completed ? 'Completed' : 'Not completed'}
               </p>
-              {user && (
+              {user ? (
                 <p className="block">
                   Assigned to: {user.name} ({user.email})
                 </p>
+              ) : (
+                <p className="block has-text-danger">User not found</p>
               )}
             </>
           )}
