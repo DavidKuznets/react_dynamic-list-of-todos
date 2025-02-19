@@ -46,7 +46,10 @@ export const TodoList: React.FC<{ todos: Todo[] }> = ({ todos }) => {
                 <td>{todo.id}</td>
                 <td>
                   {todo.completed ? (
-                    <span className="icon has-text-success">
+                    <span
+                      className="icon has-text-success"
+                      data-cy="iconCompleted"
+                    >
                       <i className="fas fa-check-circle" />
                     </span>
                   ) : (
@@ -55,15 +58,24 @@ export const TodoList: React.FC<{ todos: Todo[] }> = ({ todos }) => {
                     </span>
                   )}
                 </td>
+
                 <td>{todo.title}</td>
                 <td>
                   {selectedTodo && selectedTodo.id === todo.id ? (
-                    <button type="button" onClick={closeModal}>
-                      Hide
+                    <button
+                      type="button"
+                      data-cy="selectButton"
+                      onClick={closeModal}
+                    >
+                      <i className="fas fa-eye-slash" /> Hide
                     </button>
                   ) : (
-                    <button type="button" onClick={() => showModal(todo.id)}>
-                      Show
+                    <button
+                      type="button"
+                      data-cy="selectButton"
+                      onClick={() => showModal(todo.id)}
+                    >
+                      <i className="fas fa-eye" /> Show
                     </button>
                   )}
                 </td>
